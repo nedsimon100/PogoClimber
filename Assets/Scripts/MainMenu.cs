@@ -9,15 +9,17 @@ public class MainMenu : MonoBehaviour
     public TextMeshProUGUI bouncescore;
     public TextMeshProUGUI gravscore;
     private GameObject player;
-    string BestTimeKey = "BestTime";
+    string BestTimeKey = "BestTimeOne";
     public TextMeshProUGUI bestTime;
     
     private void Start()
     {
+        //
+        //PlayerPrefs.DeleteAll();
         player = GameObject.FindGameObjectWithTag("Player");
         PlayerPrefs.GetInt(BestTimeKey, -1);
         PlayerPrefs.Save();
-        if (PlayerPrefs.GetInt(BestTimeKey) == -1)
+        if (PlayerPrefs.GetInt(BestTimeKey,-1) == -1)
         {
             bestTime.text = "--:--:--";
         }
@@ -39,7 +41,7 @@ public class MainMenu : MonoBehaviour
     }
     public void endScreen()
     {
-        if(Time.timeSinceLevelLoad < PlayerPrefs.GetInt(BestTimeKey)|| PlayerPrefs.GetInt(BestTimeKey)< 0)
+        if(Time.timeSinceLevelLoad < PlayerPrefs.GetInt(BestTimeKey)|| PlayerPrefs.GetInt(BestTimeKey,-1)< 0)
         {
             
             PlayerPrefs.SetInt(BestTimeKey,Mathf.FloorToInt(Time.timeSinceLevelLoad));
