@@ -83,9 +83,9 @@ public class PlayerController : MonoBehaviour
             {
                 moveX = -1;
             }
-            if (rb.velocity.magnitude > 1)
+            if (rb.linearVelocity.magnitude > 1)
             {
-                speed = rb.velocity.magnitude;
+                speed = rb.linearVelocity.magnitude;
             }
         
 
@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine("squish");
             FindObjectOfType<AudioManager>().Play("Bounce");
-            rb.velocity = transform.up * bounceHeight + transform.up * (speed/speedDiv);
+            rb.linearVelocity = transform.up * bounceHeight + transform.up * (speed/speedDiv);
         }
 
     
@@ -122,14 +122,14 @@ public class PlayerController : MonoBehaviour
         bumped = true;
         animator.SetBool("bumped", bumped);
         Debug.Log("bumped");
-        rb.velocity = Vector2.zero;
+        rb.linearVelocity = Vector2.zero;
         yield return new WaitForSeconds(3f);
         bumped = false;
         animator.SetBool("bumped", bumped);
         Debug.Log("not bumped");
-        if(rb.velocity.magnitude < .5f)
+        if(rb.linearVelocity.magnitude < .5f)
         {
-            rb.velocity = transform.up * 2;
+            rb.linearVelocity = transform.up * 2;
         }
 
     }

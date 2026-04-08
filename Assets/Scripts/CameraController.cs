@@ -31,6 +31,6 @@ public class CameraController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        rb.velocity = (target - this.transform.position)*transitionSpeed;
+        rb.linearVelocity = (target - this.transform.position)*transitionSpeed;
     }
 }
