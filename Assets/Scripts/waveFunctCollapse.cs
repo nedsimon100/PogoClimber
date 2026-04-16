@@ -11,40 +11,56 @@ public class waveFunctCollapse : MonoBehaviour
     public bool reflective;
     private int iterations;
     public Vector2 minMaxIterations = new Vector2(0,5);
+    public int maxHeight;
+    public GameObject finalRoom;
  //   waveFunctCollapseManager manager;
  Transform player;
-    private void Start()
-    {
-        player = FindAnyObjectByType<PlayerController>().transform;
-
-        iterations = Random.Range(Mathf.RoundToInt(minMaxIterations.x), Mathf.RoundToInt(minMaxIterations.y));
-
-    }
     void Update()
     {
-        if ((transform.position.y)-player.position.y<maxSpawnDist)
+        waveFunctCollapseManager wfcm = FindAnyObjectByType<waveFunctCollapseManager>();
+        
+        if (wfcm.Ready)
         {
-            if (repeating)
-            {
-                Instantiate(this.gameObject, transform.position + new Vector3(0, transform.localScale.y, 0), transform.rotation);
-                Instantiate(spawnableObjects[Random.Range(0, spawnableObjects.Count)], transform.position, transform.rotation);
-            }
-            else
-            {
-                for (int i = 0; i < iterations; i++)
-                {
-                    GameObject go = Instantiate(spawnableObjects[Random.Range(0, spawnableObjects.Count)], transform.position, transform.rotation);
 
-                    if (reflective)
+            player = FindAnyObjectByType<PlayerController>().transform;
+
+
+            if (finalRoom != null && (transform.position.y) > maxHeight)
+            {
+                Instantiate(finalRoom, transform.position, transform.rotation);
+                Destroy(this.gameObject);
+            }
+            else if ((transform.position.y) - player.position.y < maxSpawnDist)
+            {
+                if(wfcm.mode == waveFunctCollapseManager.seedMode.Seeded)
+                {
+                    Random.InitState(wfcm.seed + Mathf.RoundToInt(transform.position.y) - Mathf.RoundToInt(transform.position.x));
+                    iterations = Random.Range(Mathf.RoundToInt(minMaxIterations.x), Mathf.RoundToInt(minMaxIterations.y));
+                }
+
+                if (repeating)
+                {
+                    Instantiate(this.gameObject, transform.position + new Vector3(0, transform.localScale.y, 0), transform.rotation);
+                    Instantiate(spawnableObjects[Random.Range(0, spawnableObjects.Count)], transform.position, transform.rotation);
+                }
+                else
+                {
+                    for (int i = 0; i < iterations; i++)
                     {
-                        GameObject reGO = Instantiate(go.gameObject, new Vector3(-go.transform.position.x, go.transform.position.y, 0),go.transform.rotation);
-                        reGO.transform.localScale = new Vector3(-reGO.transform.localScale.x, reGO.transform.localScale.y, reGO.transform.localScale.z); 
+                        GameObject go = Instantiate(spawnableObjects[Random.Range(0, spawnableObjects.Count)], transform.position, transform.rotation);
+
+                        if (reflective)
+                        {
+                            GameObject reGO = Instantiate(go.gameObject, new Vector3(-go.transform.position.x, go.transform.position.y, 0), go.transform.rotation);
+                            reGO.transform.localScale = new Vector3(-reGO.transform.localScale.x, reGO.transform.localScale.y, reGO.transform.localScale.z);
+                        }
                     }
                 }
+
+                Destroy(this.gameObject);
             }
-               
-            Destroy(this.gameObject);
         }
+        
 
     }
 }

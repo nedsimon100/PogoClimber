@@ -11,7 +11,8 @@ public class MainMenu : MonoBehaviour
     private GameObject player;
     string BestTimeKey = "BestTimeOne";
     public TextMeshProUGUI bestTime;
-    
+    public TextMeshProUGUI dateDisplay;
+    string dailyBestTimeKey;
     private void Start()
     {
         //
@@ -27,6 +28,7 @@ public class MainMenu : MonoBehaviour
         {
             bestTime.text = (Mathf.Floor((PlayerPrefs.GetInt(BestTimeKey) / 60) / 60).ToString()) + ":" + (Mathf.Floor((PlayerPrefs.GetInt(BestTimeKey) / 60) % 60).ToString()) + ":" + (Mathf.Floor(PlayerPrefs.GetInt(BestTimeKey) % 60).ToString());
         }
+            
         
     }
     public void play()
@@ -38,6 +40,11 @@ public class MainMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(3);
+    }
+    public void playSeeded()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(4);
     }
     public void tutorial()
     {
@@ -52,6 +59,19 @@ public class MainMenu : MonoBehaviour
             PlayerPrefs.SetInt(BestTimeKey,Mathf.FloorToInt(Time.timeSinceLevelLoad));
             PlayerPrefs.Save();
             
+        }
+        bestTime.text = (Mathf.Floor((PlayerPrefs.GetInt(BestTimeKey) / 60) / 60).ToString()) + ":" + (Mathf.Floor((PlayerPrefs.GetInt(BestTimeKey) / 60) % 60).ToString()) + ":" + (Mathf.Floor(PlayerPrefs.GetInt(BestTimeKey) % 60).ToString());
+        thyme.text = (Mathf.Floor((Time.timeSinceLevelLoad / 60) / 60).ToString()) + ":" + (Mathf.Floor((Time.timeSinceLevelLoad / 60) % 60).ToString()) + ":" + (Mathf.Floor(Time.timeSinceLevelLoad % 60).ToString());
+    }
+
+    public void SeededEndScreen()
+    {
+        if (Time.timeSinceLevelLoad < PlayerPrefs.GetInt(BestTimeKey) || PlayerPrefs.GetInt(BestTimeKey, -1) < 0)
+        {
+
+            PlayerPrefs.SetInt(BestTimeKey, Mathf.FloorToInt(Time.timeSinceLevelLoad));
+            PlayerPrefs.Save();
+
         }
         bestTime.text = (Mathf.Floor((PlayerPrefs.GetInt(BestTimeKey) / 60) / 60).ToString()) + ":" + (Mathf.Floor((PlayerPrefs.GetInt(BestTimeKey) / 60) % 60).ToString()) + ":" + (Mathf.Floor(PlayerPrefs.GetInt(BestTimeKey) % 60).ToString());
         thyme.text = (Mathf.Floor((Time.timeSinceLevelLoad / 60) / 60).ToString()) + ":" + (Mathf.Floor((Time.timeSinceLevelLoad / 60) % 60).ToString()) + ":" + (Mathf.Floor(Time.timeSinceLevelLoad % 60).ToString());
@@ -73,5 +93,18 @@ public class MainMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);
+    }
+    public void prevDay()
+    {
+        FindAnyObjectByType<ProdGenSeed>().Seed -= 1;
+        dateDisplay.text = FindAnyObjectByType<ProdGenSeed>().Seed.ToString();
+    }
+    public void nextDay()
+    {
+        if (FindAnyObjectByType<ProdGenSeed>().Seed < FindAnyObjectByType<ProdGenSeed>().CurrDate)
+        {
+            FindAnyObjectByType<ProdGenSeed>().Seed += 1;
+            dateDisplay.text = FindAnyObjectByType<ProdGenSeed>().Seed.ToString();
+        }
     }
 }

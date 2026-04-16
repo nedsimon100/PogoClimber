@@ -3,20 +3,20 @@ using UnityEngine;
 public class waveFunctCollapseManager : MonoBehaviour
 {
     public int seed = 0;
-    bool repeating = false;
+    public bool Ready = false;
     public enum seedMode 
     { 
-    Daily,
+    Seeded,
     Random,
     chosen
     }
     public seedMode mode;
-    void Start()
+    void Awake()
     {
         switch (mode)
         {
-            case seedMode.Daily:
-                seed = System.DateTime.Now.Year + System.DateTime.Now.DayOfYear;
+            case seedMode.Seeded:
+                seed = FindAnyObjectByType<ProdGenSeed>().Seed;
                 break;
             case seedMode.Random:
                 seed = Random.Range(int.MinValue, int.MaxValue);
@@ -24,7 +24,8 @@ public class waveFunctCollapseManager : MonoBehaviour
             case seedMode.chosen:
                 break;
         }
-        Random.InitState(seed);
+
+        Ready = true;
     }
 
     

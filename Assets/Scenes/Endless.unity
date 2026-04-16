@@ -652,6 +652,7 @@ MonoBehaviour:
   bouncescore: {fileID: 0}
   gravscore: {fileID: 0}
   bestTime: {fileID: 221356587}
+  dateDisplay: {fileID: 0}
 --- !u!114 &496505582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2667,6 +2668,7 @@ MonoBehaviour:
   bouncescore: {fileID: 0}
   gravscore: {fileID: 0}
   bestTime: {fileID: 221356587}
+  dateDisplay: {fileID: 0}
 --- !u!114 &1455292159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3196,7 +3198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::waveFunctCollapseManager
   seed: 0
-  mode: 0
+  mode: 1
 --- !u!4 &1655761528
 Transform:
   m_ObjectHideFlags: 0

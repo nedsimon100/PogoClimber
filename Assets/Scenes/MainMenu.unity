@@ -336,7 +336,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 153349693}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: tutorial
+        m_MethodName: prevDay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -779,10 +779,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92fad0b53e08f8b43892f4fd1265c1ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thyme: {fileID: 1819138026}
+  thyme: {fileID: 0}
   bouncescore: {fileID: 0}
   gravscore: {fileID: 0}
   bestTime: {fileID: 1819138026}
+  dateDisplay: {fileID: 1439959669}
 --- !u!1 &160948201
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,7 +1088,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 153349693}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: tutorial
+        m_MethodName: nextDay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3036,7 +3037,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 153349693}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: tutorial
+        m_MethodName: playSeeded
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5134,7 +5135,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5843680642698489850, guid: 9ea93c78c12772e48a2ffecfab6b4e42, type: 3}
       propertyPath: m_Name
-      value: AudioManager
+      value: Manager
       objectReference: {fileID: 0}
     - target: {fileID: 5843680642698489855, guid: 9ea93c78c12772e48a2ffecfab6b4e42, type: 3}
       propertyPath: m_RootOrder
@@ -5183,8 +5184,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5843680642698489850, guid: 9ea93c78c12772e48a2ffecfab6b4e42, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5843680642426347139}
   m_SourcePrefab: {fileID: 100100000, guid: 9ea93c78c12772e48a2ffecfab6b4e42, type: 3}
+--- !u!1 &5843680642426347138 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5843680642698489850, guid: 9ea93c78c12772e48a2ffecfab6b4e42, type: 3}
+  m_PrefabInstance: {fileID: 5843680642426347137}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5843680642426347139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5843680642426347138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b43a7b28b95a4374cbfc13b37d55cb85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProdGenSeed
+  CurrDate: 0
+  Seed: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

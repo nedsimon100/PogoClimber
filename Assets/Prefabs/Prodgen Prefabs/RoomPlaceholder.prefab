@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.6284768, g: 0.6415094, b: 0.08775366, a: 1}
+  m_Color: {r: 0.6284768, g: 0.6415094, b: 0.08775366, a: 0.39215687}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -172,6 +172,26 @@ MonoBehaviour:
   - {fileID: 6626810062109187877, guid: 3d18d379ac714604ea709cc618261877, type: 3}
   - {fileID: 6626810062109187877, guid: 0177e588de0d7c34a832173b09f9bd60, type: 3}
   - {fileID: 6626810062109187877, guid: 13601a9ef491e2849a905707fbc2c86e, type: 3}
+  - {fileID: 1955058017099254223, guid: 38c97af71778a764ca840345151f548c, type: 3}
+  - {fileID: 6626810062109187877, guid: 4ae31ce5bdb7be64a994350a55732fa9, type: 3}
+  - {fileID: 6626810062109187877, guid: 4f3fd8031d2ccf8409badc15e4b98e25, type: 3}
+  - {fileID: 6626810062109187877, guid: 74f9d58a8e352d04a886cd2935b85b94, type: 3}
+  - {fileID: 6626810062109187877, guid: 8a6322b8dc97df04aa1e6fe9c5f29fc2, type: 3}
+  - {fileID: 1955058017099254223, guid: 3043ba55595a3db44b8467982a9ce5dd, type: 3}
+  - {fileID: 6626810062109187877, guid: 1921c1700aff98a499c96586dad31bdb, type: 3}
+  - {fileID: 6626810062109187877, guid: 42538503fc250964ba1c847c4c0e4308, type: 3}
+  - {fileID: 6626810062109187877, guid: 5f75702e1548ae34b9b796b5ea72fb45, type: 3}
+  - {fileID: 6626810062109187877, guid: 458b1e115821f3749b7e8de61c390ad2, type: 3}
+  - {fileID: 1955058017099254223, guid: 9ac48af8fd9278542be513467e32c0b8, type: 3}
+  - {fileID: 6626810062109187877, guid: 6b3f9086ab518fc4182e96653bbf12f5, type: 3}
+  - {fileID: 6626810062109187877, guid: 9f7d64771f7b9d740a8ca24a874b01cb, type: 3}
+  - {fileID: 6626810062109187877, guid: daf0d9f211d19334189adb414c911e27, type: 3}
+  - {fileID: 6626810062109187877, guid: dd844dfd402a6c540a71dd2a879001ba, type: 3}
+  - {fileID: 1955058017099254223, guid: 330c3dbaf74364b4a951897ac97df188, type: 3}
+  - {fileID: 6626810062109187877, guid: 4955237cc742ddd4b9303a716d08c248, type: 3}
+  - {fileID: 6626810062109187877, guid: 9c08bf33d98a9694c946949a7dbd4318, type: 3}
+  - {fileID: 6626810062109187877, guid: ce2e7caaaee14c240b012a847ea21d27, type: 3}
+  - {fileID: 6626810062109187877, guid: a16ad474ff7e2e74f84202ecf97e2abd, type: 3}
   repeating: 1
   reflective: 0
   minMaxIterations: {x: 0, y: 5}
