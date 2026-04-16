@@ -1,9 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private TouchInput leftZone;
+    [SerializeField] private TouchInput rightZone;
+    [SerializeField] private TouchInput gravityZone;
+    private Inputs inputControlls;
+
     [Header("Variables")]
     public float bounceHeight;
     public float rotateSpeed;
@@ -25,6 +31,12 @@ public class PlayerController : MonoBehaviour
     private float moveX;
     private float[] standardVariables = new float[5];
     private Vector2 mousePosition;
+    private void Awake()
+    {
+        inputControlls = new Inputs();
+    }
+    void OnEnable() => inputControlls.Gameplay.Enable();
+    void OnDisable() => inputControlls.Gameplay.Disable();
     private void Start()
     {
         speed = 1;
@@ -39,19 +51,26 @@ public class PlayerController : MonoBehaviour
     {
         getInputs();
     }
+    bool left;
+    bool right;
+    bool gravity;
     private void FixedUpdate()
     {
         useInputs();
     }
-
+    public void useInputs()
+    {
+        if (left) transform.Rotate(0f, 0f, rotateSpeed);
+        if (right) transform.Rotate(0f, 0f, -rotateSpeed);
+    }
     public void getInputs()
     {
+        speed = rb.linearVelocity.magnitude;
+        left = inputControlls.Gameplay.RotateLeft.IsPressed() || (leftZone && leftZone.IsHeld);
+        right = inputControlls.Gameplay.RotateRight.IsPressed() || (rightZone && rightZone.IsHeld);
+        gravity = inputControlls.Gameplay.GravityInput.IsPressed() || (gravityZone && gravityZone.IsHeld);
 
-            mousePosition = sceneCamera.ScreenToWorldPoint(Input.mousePosition);
-        
-        moveX = Input.GetAxisRaw("Horizontal");
-
-        if ((Input.GetAxisRaw("Vertical") < 0f || (mousePosition.y < sceneCamera.gameObject.transform.position.y && Input.GetMouseButton(0) == true)) && Time.timeScale != 0f)
+        if (gravity && Time.timeScale != 0f)
         {
             rb.gravityScale = gravityMult;
             Time.timeScale = 1.2f;
@@ -75,25 +94,10 @@ public class PlayerController : MonoBehaviour
 
 
         // mobile controlls
-        if (mousePosition.x > 0 && Input.GetMouseButton(0) == true && mousePosition.y > sceneCamera.gameObject.transform.position.y)
-            {
-                moveX = 1;
-            }
-            else if (mousePosition.x < 0 && Input.GetMouseButton(0) == true && mousePosition.y > sceneCamera.gameObject.transform.position.y)
-            {
-                moveX = -1;
-            }
-            if (rb.linearVelocity.magnitude > 1)
-            {
-                speed = rb.linearVelocity.magnitude;
-            }
-        
+
 
     }
-    public void useInputs()
-    {
-        transform.Rotate(new Vector3(0, 0, -(moveX * rotateSpeed)));
-    }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

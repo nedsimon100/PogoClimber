@@ -34,6 +34,11 @@ public class MainMenu : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene(1);
     }
+    public void playEndless()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(3);
+    }
     public void tutorial()
     {
         Time.timeScale = 1f;
