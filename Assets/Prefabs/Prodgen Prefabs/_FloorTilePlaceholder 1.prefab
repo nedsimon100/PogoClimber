@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1819897399954615593}
   - component: {fileID: 6432412612052617832}
   m_Layer: 0
-  m_Name: _FloorTilePlaceholder
+  m_Name: _FloorTilePlaceholder 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -117,6 +117,4 @@ MonoBehaviour:
   - {fileID: 6600078307099414364, guid: 48cdbfd457056a2449433e847df2bf3e, type: 3}
   repeating: 0
   reflective: 0
-  minMaxIterations: {x: 1, y: 6}
-  maxHeight: 0
-  finalRoom: {fileID: 0}
+  minMaxIterations: {x: 0, y: 6}

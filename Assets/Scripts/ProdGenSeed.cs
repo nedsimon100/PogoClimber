@@ -6,9 +6,9 @@ public class ProdGenSeed : MonoBehaviour
     public int CurrDate;
     public int Seed;
 
-    void Start()
+    void Awake()
     {
-        CurrDate = (10000*System.DateTime.Now.Year) + System.DateTime.Now.DayOfYear;
+        CurrDate = (10000 * System.DateTime.Now.Year) + System.DateTime.Now.DayOfYear;
         Seed = CurrDate;
 
         if(FindAnyObjectByType<MainMenu>() != null)

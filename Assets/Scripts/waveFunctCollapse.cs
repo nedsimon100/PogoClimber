@@ -25,7 +25,7 @@ public class waveFunctCollapse : MonoBehaviour
             player = FindAnyObjectByType<PlayerController>().transform;
 
 
-            if (finalRoom != null && (transform.position.y) > maxHeight)
+            if (finalRoom != null && maxHeight < Mathf.RoundToInt(this.transform.position.y / 20))
             {
                 Instantiate(finalRoom, transform.position, transform.rotation);
                 Destroy(this.gameObject);

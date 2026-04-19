@@ -28,9 +28,7 @@ public class PlayerController : MonoBehaviour
     public int gravPoints = 0;
     public int bouncePoints = 0;
     private float speed;
-    private float moveX;
-    private float[] standardVariables = new float[5];
-    private Vector2 mousePosition;
+    private float standardHeight;
     private void Awake()
     {
         inputControlls = new Inputs();
@@ -41,11 +39,8 @@ public class PlayerController : MonoBehaviour
     {
         speed = 1;
         Physics2D.IgnoreCollision(Head.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
-        standardVariables[0] =  bounceHeight;
-        standardVariables[1] =  rotateSpeed;
-        standardVariables[2] =  gravityMult;
-        standardVariables[3] =  speedDiv;
-        standardVariables[4] =  transform.localScale.y;
+
+        standardHeight =  transform.localScale.y;
     }
     void Update()
     {
@@ -106,7 +101,7 @@ public class PlayerController : MonoBehaviour
         if (bumped == false && collision.gameObject.tag != "power up")
         {
             StartCoroutine("squish");
-            FindObjectOfType<AudioManager>().Play("Bounce");
+            FindAnyObjectByType<AudioManager>().Play("Bounce");
             rb.linearVelocity = transform.up * bounceHeight + transform.up * (speed/speedDiv);
         }
 
@@ -116,13 +111,7 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator bump()
     {
-        FindObjectOfType<AudioManager>().Play("oof");
-        //bounceHeight = standardVariables[0];
-        //rotateSpeed = standardVariables[1];
-        //gravityMult = standardVariables[2];
-        //speedDiv = standardVariables[3];
-        //gravPoints = 0;
-        //bouncePoints = 0;
+        FindAnyObjectByType<AudioManager>().Play("oof");
         bumped = true;
         animator.SetBool("bumped", bumped);
         Debug.Log("bumped");
@@ -140,11 +129,11 @@ public class PlayerController : MonoBehaviour
     IEnumerator squish()
     {
   
-        transform.localScale = new Vector2(standardVariables[4], standardVariables[4] * 0.8f);
+        transform.localScale = new Vector2(standardHeight, standardHeight * 0.8f);
         yield return new WaitForSeconds(0.1f);
-        transform.localScale = new Vector2(standardVariables[4], standardVariables[4] * 1.2f);
+        transform.localScale = new Vector2(standardHeight, standardHeight * 1.2f);
         yield return new WaitForSeconds(0.1f);
-        transform.localScale = new Vector2(standardVariables[4], standardVariables[4]);
-  
+        transform.localScale = new Vector2(standardHeight, standardHeight);
+
     }
 }

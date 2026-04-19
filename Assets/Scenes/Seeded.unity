@@ -3198,6 +3198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::waveFunctCollapseManager
   seed: 0
+  Ready: 0
   mode: 0
 --- !u!4 &1655761528
 Transform:
@@ -4852,7 +4853,7 @@ PrefabInstance:
       objectReference: {fileID: 1955058017099254223, guid: f14f293ada4f68249997c8d6ad8861df, type: 3}
     - target: {fileID: 4594218497491854427, guid: 5d4ba6c13505271439f5b621cb7bb5fa, type: 3}
       propertyPath: maxHeight
-      value: 150
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 4652225571288486431, guid: 5d4ba6c13505271439f5b621cb7bb5fa, type: 3}
       propertyPath: m_LocalPosition.x

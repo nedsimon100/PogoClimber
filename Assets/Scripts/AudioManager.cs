@@ -63,6 +63,11 @@ public class AudioManager : MonoBehaviour
             cam = GameObject.FindGameObjectWithTag("MainCamera");
         }
     }
+    public void changeMusicVolume(float newVolume,string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        s.source.volume = newVolume;
+    }
     private void Update()
     {
 
