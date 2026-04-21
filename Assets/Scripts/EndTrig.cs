@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class powerUP : MonoBehaviour
+public class EndTrig : MonoBehaviour
 {
     public CircleCollider2D coll;
     public SpriteRenderer rend;
     private GameObject player;
-    public string var;
+    public enum EndType {Tower, Daily }
+    public EndType var;
     public GameObject endscreen;
     public GameObject normalUI;
     private void Start()
@@ -25,30 +26,23 @@ public class powerUP : MonoBehaviour
 
     public void pow()
     {
-        if (player.GetComponent<PlayerController>().bumped == false)
+        Time.timeScale = 0f;
+        normalUI.SetActive(false);
+        endscreen.SetActive(true);
+        // change a player variable dependent on powerup hit
+        if (var == EndType.Daily)
         {
-            // change a player variable dependent on powerup hit
-            if (var == "bounceHeight")
-            {
-                player.GetComponent<PlayerController>().bounceHeight *= 1.1f;
-                player.GetComponent<PlayerController>().bouncePoints++;
-            }
-            else if (var == "gravityMult")
-            {
-                player.GetComponent<PlayerController>().gravityMult *= 1.1f;
-                player.GetComponent<PlayerController>().gravPoints++;
-            }
-            else if (var == "end")
-            {
-                Time.timeScale = 0f;
-                normalUI.SetActive(false);
-                endscreen.SetActive(true);
-                endscreen.GetComponent<MainMenu>().endScreen();
-            }
+            endscreen.GetComponent<MainMenu>().setDaily();
+        }
+        else if (var == EndType.Tower)
+        {
+            
+            endscreen.GetComponent<MainMenu>().endScreen();
+        }
 
             coll.enabled = false;
             rend.color = new Color(rend.color.r, rend.color.g, rend.color.b, 0f);
-        }
+        
         
     }
     public void FixedUpdate()

@@ -25,7 +25,7 @@ public class waveFunctCollapse : MonoBehaviour
             player = FindAnyObjectByType<PlayerController>().transform;
 
 
-            if (finalRoom != null && maxHeight < Mathf.RoundToInt(this.transform.position.y / 20))
+            if (maxHeight > 0 && maxHeight < Mathf.RoundToInt(this.transform.position.y / 20))
             {
                 Instantiate(finalRoom, transform.position, transform.rotation);
                 Destroy(this.gameObject);
@@ -35,9 +35,9 @@ public class waveFunctCollapse : MonoBehaviour
                 if(wfcm.mode == waveFunctCollapseManager.seedMode.Seeded)
                 {
                     Random.InitState(wfcm.seed + Mathf.RoundToInt(transform.position.y) - Mathf.RoundToInt(transform.position.x));
-                    iterations = Random.Range(Mathf.RoundToInt(minMaxIterations.x), Mathf.RoundToInt(minMaxIterations.y));
+                    
                 }
-
+                iterations = Random.Range(Mathf.RoundToInt(minMaxIterations.x), Mathf.RoundToInt(minMaxIterations.y));
                 if (repeating)
                 {
                     Instantiate(this.gameObject, transform.position + new Vector3(0, transform.localScale.y, 0), transform.rotation);

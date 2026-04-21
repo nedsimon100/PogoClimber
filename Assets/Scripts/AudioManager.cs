@@ -49,7 +49,7 @@ public class AudioManager : MonoBehaviour
     }
     private void Start()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 1)
+        if (SceneManager.GetActiveScene().buildIndex != 0)
         {
 
             cam = GameObject.FindGameObjectWithTag("MainCamera");
@@ -57,7 +57,7 @@ public class AudioManager : MonoBehaviour
     }
     private void OnLevelWasLoaded(int level)
     {
-        if (level == 1)
+        if (level != 0)
         {
             
             cam = GameObject.FindGameObjectWithTag("MainCamera");
@@ -71,7 +71,7 @@ public class AudioManager : MonoBehaviour
     private void Update()
     {
 
-        if(SceneManager.GetActiveScene().buildIndex == 1)
+        if(SceneManager.GetActiveScene().buildIndex != 0)
         {
             // addaptive audio
             theme.source.pitch = 1 + ((cam.GetComponent<CameraController>().floor - 1)/80);

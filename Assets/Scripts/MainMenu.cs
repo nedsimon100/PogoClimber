@@ -6,14 +6,16 @@ using TMPro;
 public class MainMenu : MonoBehaviour
 {
     public TextMeshProUGUI thyme;
-    public TextMeshProUGUI bouncescore;
-    public TextMeshProUGUI gravscore;
     private GameObject player;
     string BestTimeKey = "BestTimeOne";
     string EndlessKey = "BestHeight";
     public TextMeshProUGUI bestTime;
+    public TextMeshProUGUI bestDailyTime;
     public TextMeshProUGUI dateDisplay;
+    public TextMeshProUGUI bestEndless;
     string dailyBestTimeKey;
+    public GameObject NormalUI;
+    public GameObject PauseUI;
     private void Start()
     {
         //
@@ -21,30 +23,78 @@ public class MainMenu : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         PlayerPrefs.GetInt(BestTimeKey, -1);
         PlayerPrefs.Save();
-        if (PlayerPrefs.GetInt(BestTimeKey,-1) == -1)
+        if (SceneManager.GetActiveScene().buildIndex == 0)
         {
-            bestTime.text = "--:--:--";
+            if (PlayerPrefs.GetInt(EndlessKey, -1) == -1)
+            {
+                bestEndless.text = "--";
+            }
+            else
+            {
+                bestEndless.text = PlayerPrefs.GetInt(EndlessKey).ToString();
+            }
+            GetDaily();
+        }
+        if (SceneManager.GetActiveScene().buildIndex == 4)
+        {
+            dailyBestTimeKey = "BestTime" + FindAnyObjectByType<ProdGenSeed>().Seed.ToString();
+            if (PlayerPrefs.GetInt(dailyBestTimeKey, -1) == -1)
+            {
+                bestTime.text = "--:--:--";
+            }
+            else
+            {
+                bestTime.text = MakeTimeReadable(PlayerPrefs.GetInt(dailyBestTimeKey));
+            }
         }
         else
         {
-            bestTime.text = MakeTimeReadable(PlayerPrefs.GetInt(BestTimeKey));
+            if (PlayerPrefs.GetInt(BestTimeKey, -1) == -1)
+            {
+                bestTime.text = "--:--:--";
+            }
+            else
+            {
+                bestTime.text = MakeTimeReadable(PlayerPrefs.GetInt(BestTimeKey));
+            }
         }
-            
         
+    }
+    public void ResetScores()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+        bestTime.text = "--:--:--";
+        bestEndless.text = "--";
+        bestDailyTime.text = "--:--:--";
+    }
+
+    public void setDaily()
+    {
+        dailyBestTimeKey = "BestTime" + FindAnyObjectByType<ProdGenSeed>().Seed.ToString();
+        if (Time.timeSinceLevelLoad < PlayerPrefs.GetInt(dailyBestTimeKey) || PlayerPrefs.GetInt(dailyBestTimeKey, -1) < 0)
+        {
+
+            PlayerPrefs.SetInt(dailyBestTimeKey, Mathf.FloorToInt(Time.timeSinceLevelLoad));
+            PlayerPrefs.Save();
+
+        }
+        bestTime.text = MakeTimeReadable(PlayerPrefs.GetInt(dailyBestTimeKey));
+        thyme.text = MakeTimeReadable(Time.timeSinceLevelLoad);
     }
     public void GetDaily()
     {
-        dateDisplay.text = FindAnyObjectByType<ProdGenSeed>().Seed.ToString();
+        dateDisplay.text = FindAnyObjectByType<ProdGenSeed>().CurrDate.ToString("dd/MM/yyyy");
         dailyBestTimeKey = "BestTime" + FindAnyObjectByType<ProdGenSeed>().Seed.ToString();
         PlayerPrefs.GetInt(dailyBestTimeKey, -1);
         PlayerPrefs.Save();
         if (PlayerPrefs.GetInt(dailyBestTimeKey, -1) == -1)
         {
-            bestTime.text = "--:--:--";
+            bestDailyTime.text = "--:--:--";
         }
         else
         {
-            bestTime.text = MakeTimeReadable(PlayerPrefs.GetInt(dailyBestTimeKey));
+            bestDailyTime.text = MakeTimeReadable(PlayerPrefs.GetInt(dailyBestTimeKey));
         }
     }
     public void changeMusicVolume(float vol)
@@ -91,20 +141,10 @@ public class MainMenu : MonoBehaviour
 
     public string MakeTimeReadable(float score)
     {
-        return (Mathf.Floor((score / 60) / 60).ToString()) + ":" + (Mathf.Floor((score / 60) % 60).ToString()) + ":" + (Mathf.Floor(score % 60).ToString());
-    }
-
-    public void SeededEndScreen()
-    {
-        if (Time.timeSinceLevelLoad < PlayerPrefs.GetInt(BestTimeKey) || PlayerPrefs.GetInt(BestTimeKey, -1) < 0)
-        {
-
-            PlayerPrefs.SetInt(BestTimeKey, Mathf.FloorToInt(Time.timeSinceLevelLoad));
-            PlayerPrefs.Save();
-
-        }
-        bestTime.text = MakeTimeReadable(PlayerPrefs.GetInt(BestTimeKey));
-        thyme.text = MakeTimeReadable(Time.timeSinceLevelLoad);
+        int h = Mathf.FloorToInt((score / 60) / 60);
+        int m = Mathf.FloorToInt((score / 60) % 60);
+        int s = Mathf.FloorToInt(score % 60);
+        return (h<10?"0"+h.ToString():h.ToString()) + ":" + (m<10?"0"+m.ToString():m.ToString()) + ":" + (s<10?"0"+s.ToString():s.ToString());
     }
 
     public void Quit()
@@ -114,26 +154,32 @@ public class MainMenu : MonoBehaviour
     public void pause()
     {
         Time.timeScale = 0f;
+        PauseUI.SetActive(true);
+        NormalUI.SetActive(false);
     }
     public void resume()
     {
         Time.timeScale = 1f;
+        PauseUI.SetActive(false);
+        NormalUI.SetActive(true);
     }
     public void menuMain()
     {
+        FindAnyObjectByType<ProdGenSeed>().Reset();
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
     public void prevDay()
     {
-        FindAnyObjectByType<ProdGenSeed>().Seed -= 1;
-        dateDisplay.text = FindAnyObjectByType<ProdGenSeed>().Seed.ToString();
+        FindAnyObjectByType<ProdGenSeed>().PrevDay();
+        GetDaily();
     }
     public void nextDay()
     {
-        if (FindAnyObjectByType<ProdGenSeed>().Seed < FindAnyObjectByType<ProdGenSeed>().CurrDate)
+        if (FindAnyObjectByType<ProdGenSeed>().CurrDate < System.DateTime.Today)
         {
-            FindAnyObjectByType<ProdGenSeed>().Seed += 1;
+            FindAnyObjectByType<ProdGenSeed>().NextDay();
+            
             GetDaily();
         }
     }

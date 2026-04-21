@@ -64,6 +64,17 @@ public class PlayerController : MonoBehaviour
         left = inputControlls.Gameplay.RotateLeft.IsPressed() || (leftZone && leftZone.IsHeld);
         right = inputControlls.Gameplay.RotateRight.IsPressed() || (rightZone && rightZone.IsHeld);
         gravity = inputControlls.Gameplay.GravityInput.IsPressed() || (gravityZone && gravityZone.IsHeld);
+        if(inputControlls.Gameplay.Pause.WasPressedThisFrame())
+        {
+            if (Time.timeScale == 1f)
+            {
+                FindAnyObjectByType<MainMenu>().pause();
+            }
+            else if (Time.timeScale == 0f)
+            {
+                FindAnyObjectByType<MainMenu>().resume();
+            }
+        }
 
         if (gravity && Time.timeScale != 0f)
         {
