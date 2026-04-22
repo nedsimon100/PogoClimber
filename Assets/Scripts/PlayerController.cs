@@ -8,7 +8,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private TouchInput leftZone;
     [SerializeField] private TouchInput rightZone;
     [SerializeField] private TouchInput gravityZone;
-    private Inputs inputControlls;
+    [SerializeField] private TouchInput PauseBtn;
+    public Inputs inputControlls;
 
     [Header("Variables")]
     public float bounceHeight;
@@ -64,7 +65,7 @@ public class PlayerController : MonoBehaviour
         left = inputControlls.Gameplay.RotateLeft.IsPressed() || (leftZone && leftZone.IsHeld);
         right = inputControlls.Gameplay.RotateRight.IsPressed() || (rightZone && rightZone.IsHeld);
         gravity = inputControlls.Gameplay.GravityInput.IsPressed() || (gravityZone && gravityZone.IsHeld);
-        if(inputControlls.Gameplay.Pause.WasPressedThisFrame())
+        if (inputControlls.Gameplay.Pause.WasPressedThisFrame() || (PauseBtn && PauseBtn.IsHeld)) 
         {
             if (Time.timeScale == 1f)
             {

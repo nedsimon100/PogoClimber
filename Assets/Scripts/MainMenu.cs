@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     public TextMeshProUGUI thyme;
@@ -16,6 +19,7 @@ public class MainMenu : MonoBehaviour
     string dailyBestTimeKey;
     public GameObject NormalUI;
     public GameObject PauseUI;
+    private Inputs inputControlls;
     private void Start()
     {
         //
@@ -25,6 +29,8 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.Save();
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
+            //inputControlls = new Inputs();
+            //inputControlls.UI.Enable();
             if (PlayerPrefs.GetInt(EndlessKey, -1) == -1)
             {
                 bestEndless.text = "--";
@@ -147,18 +153,62 @@ public class MainMenu : MonoBehaviour
         return (h<10?"0"+h.ToString():h.ToString()) + ":" + (m<10?"0"+m.ToString():m.ToString()) + ":" + (s<10?"0"+s.ToString():s.ToString());
     }
 
+    //in game menu
+    bool paused = false;
+    Vector2 lastMousePosition;
+    bool mouseIsActive = true;
+    void Update()
+    {
+        if (Gamepad.current != null && Gamepad.current.wasUpdatedThisFrame)
+        {
+            mouseIsActive = false;
+        }
+
+        if (Mouse.current != null)
+        {
+            Vector2 currentMouse = Mouse.current.position.ReadValue();
+            if (currentMouse != lastMousePosition)
+            {
+                lastMousePosition = currentMouse;
+                mouseIsActive = true;
+                EventSystem.current.SetSelectedGameObject(null);
+            }
+        }
+
+        if (!mouseIsActive)
+        {
+            if (EventSystem.current.currentSelectedGameObject == null ||
+                !EventSystem.current.currentSelectedGameObject.activeInHierarchy)
+            {
+                Selectable first = FindFirstActiveSelectable();
+                if (first != null)
+                    EventSystem.current.SetSelectedGameObject(first.gameObject);
+            }
+        }
+    }
+    Selectable FindFirstActiveSelectable()
+    {
+        foreach (Selectable s in Selectable.allSelectablesArray)
+        {
+            if (s.gameObject.activeInHierarchy && s.interactable)
+                return s;
+        }
+        return null;
+    }
     public void Quit()
     {
         Application.Quit();
     }
     public void pause()
     {
+        paused = true;
         Time.timeScale = 0f;
         PauseUI.SetActive(true);
         NormalUI.SetActive(false);
     }
     public void resume()
     {
+        paused = false;
         Time.timeScale = 1f;
         PauseUI.SetActive(false);
         NormalUI.SetActive(true);

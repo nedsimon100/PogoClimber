@@ -6,9 +6,11 @@ public class TouchInput : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public bool IsHeld { get; private set; }
     private Image image;
+    private Color defaultColor;
     private void Start()
     {
          image = this.GetComponent<Image>();
+        defaultColor = image.color;
     }
     private void Update()
     {
@@ -18,7 +20,7 @@ public class TouchInput : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         }
         else
         {
-            image.color = new Color(1f,1f,1f,0f);
+            image.color = defaultColor;
         }
     }
 
