@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerHead : MonoBehaviour
 {
-
+    public bool deadOnBump = false; 
     public GameObject Player;
 
     private void Start()
@@ -13,6 +13,7 @@ public class PlayerHead : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D col)
     {
-        Player.GetComponent<PlayerController>().StartCoroutine("bump");
+        if(Player.GetComponent<PlayerController>())
+            Player.GetComponent<PlayerController>().StartCoroutine("bump", deadOnBump);
     }
 }

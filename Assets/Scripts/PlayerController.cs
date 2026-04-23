@@ -121,14 +121,27 @@ public class PlayerController : MonoBehaviour
    
         
     }
-    IEnumerator bump()
+    IEnumerator bump(bool DoB)
     {
         FindAnyObjectByType<AudioManager>().Play("oof");
         bumped = true;
         animator.SetBool("bumped", bumped);
-        Debug.Log("bumped");
+        transform.localScale = new Vector2(standardHeight, standardHeight);
+        if (DoB)
+        {
+
+            rb.constraints = RigidbodyConstraints2D.None;
+            int floor = Mathf.RoundToInt(this.transform.position.y / 20);
+            FindAnyObjectByType<MainMenu>().endlessEnd(floor);
+            Destroy(this);
+            yield break;
+        }
+
         rb.linearVelocity = Vector2.zero;
+        Debug.Log("bumped");
+        
         yield return new WaitForSeconds(3f);
+        
         bumped = false;
         animator.SetBool("bumped", bumped);
         Debug.Log("not bumped");

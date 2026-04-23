@@ -26,32 +26,24 @@ public class EndTrig : MonoBehaviour
 
     public void pow()
     {
-        Time.timeScale = 0f;
-        normalUI.SetActive(false);
-        endscreen.SetActive(true);
+       // Time.timeScale = 0f;
+        Destroy(player.GetComponent<PlayerController>());
+        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         // change a player variable dependent on powerup hit
         if (var == EndType.Daily)
         {
-            endscreen.GetComponent<MainMenu>().setDaily();
+            FindAnyObjectByType<MainMenu>().setDaily();
         }
         else if (var == EndType.Tower)
         {
-            
-            endscreen.GetComponent<MainMenu>().endScreen();
+
+            FindAnyObjectByType<MainMenu>().endScreen();
         }
 
             coll.enabled = false;
             rend.color = new Color(rend.color.r, rend.color.g, rend.color.b, 0f);
-        
-        
+
+        Destroy(this);
     }
-    public void FixedUpdate()
-    {
-        if(player.GetComponent<PlayerController>().bumped == true)
-        {
-            // reset when player is bumped
-            coll.enabled = true;
-            rend.color = new Color(rend.color.r, rend.color.g, rend.color.b, 1);
-        }
-    }
+    
 }

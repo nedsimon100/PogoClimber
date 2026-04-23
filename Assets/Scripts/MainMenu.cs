@@ -74,9 +74,24 @@ public class MainMenu : MonoBehaviour
         bestEndless.text = "--";
         bestDailyTime.text = "--:--:--";
     }
-
+    public GameObject endscreen;
+    public GameObject normalUI;
+    public void endlessEnd(int score)
+    {
+        normalUI.SetActive(false);
+        endscreen.SetActive(true);
+        if (score > PlayerPrefs.GetInt("BestHeight", -1))
+        {
+            PlayerPrefs.SetInt("BestHeight", score);
+            PlayerPrefs.Save();
+        }
+        bestTime.text = PlayerPrefs.GetInt("BestHeight").ToString();
+        thyme.text = score.ToString();
+    }
     public void setDaily()
     {
+        normalUI.SetActive(false);
+        endscreen.SetActive(true);
         dailyBestTimeKey = "BestTime" + FindAnyObjectByType<ProdGenSeed>().Seed.ToString();
         if (Time.timeSinceLevelLoad < PlayerPrefs.GetInt(dailyBestTimeKey) || PlayerPrefs.GetInt(dailyBestTimeKey, -1) < 0)
         {
@@ -134,7 +149,9 @@ public class MainMenu : MonoBehaviour
     }
     public void endScreen()
     {
-        if(Time.timeSinceLevelLoad < PlayerPrefs.GetInt(BestTimeKey)|| PlayerPrefs.GetInt(BestTimeKey,-1)< 0)
+        normalUI.SetActive(false);
+        endscreen.SetActive(true);
+        if (Time.timeSinceLevelLoad < PlayerPrefs.GetInt(BestTimeKey)|| PlayerPrefs.GetInt(BestTimeKey,-1)< 0)
         {
             
             PlayerPrefs.SetInt(BestTimeKey,Mathf.FloorToInt(Time.timeSinceLevelLoad));

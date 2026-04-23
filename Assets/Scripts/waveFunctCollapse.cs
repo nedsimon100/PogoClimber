@@ -14,7 +14,7 @@ public class waveFunctCollapse : MonoBehaviour
     public int maxHeight;
     public GameObject finalRoom;
  //   waveFunctCollapseManager manager;
- Transform player;
+    Transform player;
     void Update()
     {
         waveFunctCollapseManager wfcm = FindAnyObjectByType<waveFunctCollapseManager>();
@@ -22,7 +22,7 @@ public class waveFunctCollapse : MonoBehaviour
         if (wfcm.Ready)
         {
 
-            player = FindAnyObjectByType<PlayerController>().transform;
+            player = FindAnyObjectByType<PlayerTag>().transform;
 
 
             if (maxHeight > 0 && maxHeight < Mathf.RoundToInt(this.transform.position.y / 20))
