@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -45,14 +46,16 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-        getInputs();
+
+            getInputs();
     }
     bool left;
     bool right;
     bool gravity;
     private void FixedUpdate()
     {
-        useInputs();
+
+            useInputs();
     }
     public void useInputs()
     {
@@ -104,12 +107,10 @@ public class PlayerController : MonoBehaviour
 
 
     }
-
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
-    
+
+        //
         if (bumped == false && collision.gameObject.tag != "power up")
         {
             StartCoroutine("squish");
@@ -123,33 +124,36 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator bump(bool DoB)
     {
-        FindAnyObjectByType<AudioManager>().Play("oof");
-        bumped = true;
-        animator.SetBool("bumped", bumped);
-        transform.localScale = new Vector2(standardHeight, standardHeight);
-        if (DoB)
-        {
-
+        if (bumped) { yield return null; yield break; }
+        
+            FindAnyObjectByType<AudioManager>().Play("oof");
+            bumped = true;
+            animator.SetBool("bumped", bumped);
+            transform.localScale = new Vector2(standardHeight, standardHeight);
             rb.constraints = RigidbodyConstraints2D.None;
-            int floor = Mathf.RoundToInt(this.transform.position.y / 20);
-            FindAnyObjectByType<MainMenu>().endlessEnd(floor);
-            Destroy(this);
-            yield break;
-        }
+            if (DoB)
+            {
 
-        rb.linearVelocity = Vector2.zero;
-        Debug.Log("bumped");
-        
-        yield return new WaitForSeconds(3f);
-        
-        bumped = false;
-        animator.SetBool("bumped", bumped);
-        Debug.Log("not bumped");
-        if(rb.linearVelocity.magnitude < .5f)
-        {
-            rb.linearVelocity = transform.up * 2;
-        }
+                int floor = Mathf.RoundToInt(this.transform.position.y / 20);
+                FindAnyObjectByType<MainMenu>().endlessEnd(floor);
+                Destroy(this);
+                yield break;
+            }
 
+            //rb.linearVelocity = Vector2.zero;
+            Debug.Log("bumped");
+
+            yield return new WaitForSeconds(2.8f);
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            yield return new WaitForSeconds(0.2f);
+            bumped = false;
+            animator.SetBool("bumped", bumped);
+            Debug.Log("not bumped");
+            if(rb.linearVelocity.magnitude < .5f)
+            {
+                rb.linearVelocity = transform.up;
+            }
+        
     }
     IEnumerator squish()
     {

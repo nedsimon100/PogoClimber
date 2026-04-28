@@ -117,4 +117,6 @@ MonoBehaviour:
   - {fileID: 6600078307099414364, guid: 48cdbfd457056a2449433e847df2bf3e, type: 3}
   repeating: 0
   reflective: 0
-  minMaxIterations: {x: 0, y: 6}
+  minMaxIterations: {x: 0, y: 4}
+  maxHeight: 0
+  finalRoom: {fileID: 0}
